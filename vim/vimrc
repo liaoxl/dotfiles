@@ -6,16 +6,16 @@
 
 " Which system
 if(has("win32") || has("win64"))
-	let g:isWIN = 1
+    let g:isWIN = 1
 else
-	let g:isWIN = 0
+    let g:isWIN = 0
 endif
 
 " GUI
 if has("gui_running")
-	let g:isGUI = 1
+    let g:isGUI = 1
 else
-	let g:isGUI = 0
+    let g:isGUI = 0
 endif
 
 
@@ -43,10 +43,10 @@ au FileType ruby,eruby,coffee,sh set shiftwidth=2
 au FileType ruby,eruby,coffee,sh set tabstop=2
 
 if g:isGUI
-	colorscheme molokai
-	set guifont = Monaco:h11
+    colorscheme molokai
+    set guifont = Monaco:h11
 else
-	set guifont=Monaca:h11
+    set guifont=Monaca:h11
 endif
 
 set backspace=2              " 设置退格键可用
@@ -111,19 +111,19 @@ inoremap { {}<ESC>i
 :inoremap ` ``<ESC>i
 
 function ClosePair(char)
-	if getline('.')[col('.') - 1] == a:char
-		return "\<Right>"
-	else
-		return a:char
-	endif
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
 endf
 
 " snipMate
 let g:snips_author='Xiangli Liao'
 if g:isWIN
-	let g:snippets_dir=$VIM.'/snippets/'
+    let g:snippets_dir=$VIM.'/snippets/'
 else
-	let g:snippets_dir='~/.vim/bundle/vim-snipmate/'
+    let g:snippets_dir='~/.vim/bundle/vim-snipmate/'
 endif
 let g:snipMate                         = {}
 " 设置补全项之间的继承关系，比如 PHP补全继承HTML的补全
@@ -200,15 +200,15 @@ vmap <leader>rb <ESC>:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " \rt                 一键替换全部Tab为空格
 func! RemoveTabs()
     if &shiftwidth == 2
-        exec "%s/	/  /g"
+        exec "%s/    /  /g"
     elseif &shiftwidth == 4
-        exec "%s/	/    /g"
+        exec "%s/    /    /g"
     elseif &shiftwidth == 6
-        exec "%s/	/      /g"
+        exec "%s/    /      /g"
     elseif &shiftwidth == 8
-        exec "%s/	/        /g"
+        exec "%s/    /        /g"
     else
-        exec "%s/	/ /g"
+        exec "%s/    / /g"
     end
 endfunc
 
@@ -228,8 +228,8 @@ func! Compile_Run_Code()
         else
             exec "!gcc % -o %< && ./%<"
         endif
-	elseif &filetype == "cpp"
-		exec "!g++ % -o %< && ./%<"
+    elseif &filetype == "cpp"
+        exec "!g++ % -o %< && ./%<"
     elseif &filetype == "ruby"
         exec "!ruby %:t"
     elseif &filetype == "php"
