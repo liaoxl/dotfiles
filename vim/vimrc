@@ -6,16 +6,16 @@
 
 " Which system
 if(has("win32") || has("win64"))
-    let g:isWIN = 1
+	let g:isWIN = 1
 else
-    let g:isWIN = 0
+	let g:isWIN = 0
 endif
 
 " GUI
 if has("gui_running")
-    let g:isGUI = 1
+	let g:isGUI = 1
 else
-    let g:isGUI = 0
+	let g:isGUI = 0
 endif
 
 
@@ -29,10 +29,6 @@ call vundle#rc()
 " required!
 Bundle 'gmarik/vundle'
 Bundle 'kien/ctrlp.vim'
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "snipmate-snippets"
-Bundle "garbas/vim-snipmate"
 
 " Indent strategy
 set shiftwidth=4
@@ -43,10 +39,10 @@ au FileType ruby,eruby,coffee,sh set shiftwidth=2
 au FileType ruby,eruby,coffee,sh set tabstop=2
 
 if g:isGUI
-    colorscheme molokai
-    set guifont = Monaco:h11
+	set mouse=a
+	set mousemodel=popup
 else
-    set guifont=Monaca:h11
+	set guifont=Monaca:h11
 endif
 
 set backspace=2              " 设置退格键可用
@@ -101,39 +97,22 @@ set fileformats=unix,dos,mac
 
 " 引号 && 括号自动匹配
 :inoremap ( ()<ESC>i
-:inoremap ) <c-r>=ClosePair(')')<CR>
+:inoremap ) <c-r>=ClosePairs(')')<CR>
 inoremap { {}<ESC>i
-:inoremap } <c-r>=ClosePair('}')<CR>
+:inoremap } <c-r>=ClosePairs('}')<CR>
 :inoremap [ []<ESC>i
-:inoremap ] <c-r>=ClosePair(']')<CR>
+:inoremap ] <c-r>=ClosePairs(']')<CR>
 :inoremap " ""<ESC>i
 :inoremap ' ''<ESC>i
 :inoremap ` ``<ESC>i
 
-function ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
+func! ClosePairs(char)
+	if getline('.')[col('.') - 1] == a:char
+		return "\<Right>"
+	else
+		return a:char
+	endif
 endf
-
-" snipMate
-let g:snips_author='Xiangli Liao'
-if g:isWIN
-    let g:snippets_dir=$VIM.'/snippets/'
-else
-    let g:snippets_dir='~/.vim/bundle/vim-snipmate/'
-endif
-let g:snipMate                         = {}
-" 设置补全项之间的继承关系，比如 PHP补全继承HTML的补全
-let g:snipMate.scope_aliases           = {}
-let g:snipMate.scope_aliases['eruby']  = 'eruby,html'
-let g:snipMate.scope_aliases['scss']   = 'scss,html'
-let g:snipMate.scope_aliases['php']    = 'php,html'
-let g:snipMate.scope_aliases['smarty'] = 'smarty,html'
-let g:snipMate.scope_aliases['blade']  = 'blade,html'
-let g:snipMate.scope_aliases['xhtml']  = 'html'
 
 " AuthorInfoDetect
 let g:vimrc_author='Moondark'
@@ -162,26 +141,14 @@ imap <c-j> <ESC><Down>I
 " Ctrl + K            光标移上一行行尾
 imap <c-k> <ESC><Up>A
 
+
 " Ctrl + L            光标移当前行行尾
 imap <c-l> <ESC>A
 
 
 " \c                  复制至公共剪贴板
-vmap <leader>c "+y
-
-" \v                  从公共剪贴板粘贴
-imap <leader>v <ESC>"+p
-nmap <leader>v "+p
-vmap <leader>v "+p
-
-" \bb                 按=号对齐代码 [Tabular插件]
-nmap <leader>bb :Tab /=<CR>
-
-" \bn                 自定义对齐    [Tabular插件]
-nmap <leader>bn :Tab /
-
-" \nt                 打开NERDTree窗口，在左侧栏显示
-nmap <leader>nt :NERDTree<CR>
+vmap <leader>c :!xclip -selection clipboard<CR>u
+set pastetoggle=<F4>
 
 " \tl                 打开Taglist/TxtBrowser窗口，在右侧栏显示
 nmap <leader>tl :Tlist<CR><c-l>
@@ -200,15 +167,15 @@ vmap <leader>rb <ESC>:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " \rt                 一键替换全部Tab为空格
 func! RemoveTabs()
     if &shiftwidth == 2
-        exec "%s/    /  /g"
+        exec "%s/	/  /g"
     elseif &shiftwidth == 4
-        exec "%s/    /    /g"
+        exec "%s/	/    /g"
     elseif &shiftwidth == 6
-        exec "%s/    /      /g"
+        exec "%s/	/      /g"
     elseif &shiftwidth == 8
-        exec "%s/    /        /g"
+        exec "%s/	/        /g"
     else
-        exec "%s/    / /g"
+        exec "%s/	/ /g"
     end
 endfunc
 
@@ -217,7 +184,7 @@ nmap <leader>rt :call RemoveTabs()<CR>
 vmap <leader>rt <ESC>:call RemoveTabs()<CR>
 
 
-" ======= 编译 && 运行 && 模板 ======= "
+" ======= 编译 && 运行  ======= "
 
 " 编译并运行
 func! Compile_Run_Code()
@@ -239,14 +206,32 @@ func! Compile_Run_Code()
     endif
 endfunc
 
+" 编译生成有调试信息的文件
+func! Debug_Run_Code()
+	exec "w"
+	if &filetype == "c"
+		exec "gcc -g % -o %< && gdb %<"
+	elseif &filetype == "cpp"
+		exec "!g++ -g % -o %< && gdb %<"
+	endif
+endfunc
 
 " F5         一键保存、编译、运行
 imap <F5> <ESC>:call Compile_Run_Code()<CR>
 nmap <F5> :call Compile_Run_Code()<CR>
 vmap <F5> <ESC>:call Compile_Run_Code()<CR>
 
-" \T         一键加载语法模板
-imap <leader>T <ESC>:LoadTemplate<CR><ESC>:AuthorInfoDetect<CR><ESC>Gi
-nmap <leader>T :LoadTemplate<CR><ESC>:AuthorInfoDetect<CR><ESC>Gi
-vmap <leader>T <ESC>:LoadTemplate<CR><ESC>:AuthorInfoDetect<CR><ESC>Gi
+
+" <C-F5>  对C/C++生成可调试的文件
+imap <C-F5> <ESC>:call Debug_Run_Code()<CR>
+nmap <C-F5> :call Debug_Run_Code()<CR>
+vmap <C-F5> <ESC>:call Debug_Run_Code()<CR>
+" F3 save
+imap <F3> <ESC>:w<CR>i
+nmap <F3> :w<CR>
+
+" F2 Nerdtree
+imap <F2> <ESC>:NERDTree<CR>i
+nmap <F2> :NERDTree<CR>
+vmap <F2> <ESC>:NERTree<CR>v
 
