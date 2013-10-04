@@ -1,0 +1,33 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific aliases and functions
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+alias hust='sudo /home/moondark/Downloads/software/rjsupplicant/rjsupplicant.sh -d1 -nem1 -unq022441 -p1992102'
+
+alias goagent='python /home/moondark/google/google_appengine/goagent/local/proxy.py'
+
+# Apply the fcitx Input method
+export GTK_IM_MODULE=xim
+export XMODIFIERS="@im=fcitx"
+export QT_IM_MODULE=xim
+
+
+# pbcopy为mac上面常用的拷贝命令
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+
+# 一键切换到leetcode目录下
+alias leetcode='cd /home/moondark/cdev/leetcode/'
+
+# 一键切换到写博客目录
+alias octopress='cd /home/moondark/rubydev/moondark/'
+
+# 一键切换到cpp测试目录
+alias cpptest='cd /home/moondark/cdev/cpptest'
