@@ -6,7 +6,7 @@
 # './install.sh'
 
 echo "Step 1: Copy Files to ~/.vimrc..."
-cp vimrc ~/.vimrc
+cp ./vimfiles/vimrc ~/.vimrc
 echo "Finish step 1"
 
 echo "Step 2: Get Vundle to manage your vim"
