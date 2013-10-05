@@ -9,7 +9,7 @@ fi
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-alias hust='sudo /home/moondark/Downloads/software/rjsupplicant/rjsupplicant.sh -d1 -nem1 -unq022441 -p1992102'
+alias hust='sudo /home/moondark/Downloads/software/rjsupplicant/rjsupplicant.sh -d1 -nem1 -unq022441 -p***
 
 alias goagent='python /home/moondark/google/google_appengine/goagent/local/proxy.py'
 
