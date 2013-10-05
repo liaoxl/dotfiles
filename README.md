@@ -15,6 +15,7 @@ git clone https://github.com/liaoxl/dotfiles.git your_tmp_dir
 cd your_tmp_dir
 sh vimfiles/install.sh
 # If you want to remove the download files
+cd ..
 rm -rf your_tmp_dir
 ```
 
