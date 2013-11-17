@@ -19,5 +19,6 @@ cd ..
 rm -rf your_tmp_dir
 ```
 
+![myvim](http://vdisk-thumb-2.wcdn.cn/frame.1024x768/download-vdisk.sina.com.cn/42202728/33a23c1a503499e9a1743406e1d5428ffe4211c9?ssig=4BHBdm%2FtGE&Expires=1384711200&KID=sae,l30zoo1wmz)
 ---
 #### BASH
