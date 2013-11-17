@@ -18,7 +18,7 @@ else
 	let g:isGUI = 0
 endif
 
-
+" Use vundle to manage the plugin
 set nocompatible    " be iMproved
 filetype off        " required!
 
@@ -115,9 +115,9 @@ func! ClosePairs(char)
 endf
 
 " AuthorInfoDetect
-let g:vimrc_author='Moondark'
-let g:vimrc_email='liaoxl2012@gmail.com'
-let g:vimrc_homepage='http://liaoxl.github.com'
+let g:author='Moondark'
+let g:email='liaoxl2012@gmail.com'
+let g:homepage='http://liaoxl.github.com'
 
 " Indent_guides
 let g:indent_guides_enable_on_vim_startup=0  " 默认关闭
@@ -196,7 +196,7 @@ func! Compile_Run_Code()
             exec "!gcc % -o %< && ./%<"
         endif
     elseif &filetype == "cpp"
-        exec "!g++ % -o %< && ./%<"
+        exec "!g++ -std=c++11 % -o %< && ./%<"
     elseif &filetype == "ruby"
         exec "!ruby %:t"
     elseif &filetype == "php"
@@ -210,9 +210,9 @@ endfunc
 func! Debug_Run_Code()
 	exec "w"
 	if &filetype == "c"
-		exec "gcc -g % -o %< && gdb %<"
+		exec "!gcc -g % -o %< && gdb -silent %<"
 	elseif &filetype == "cpp"
-		exec "!g++ -g % -o %< && gdb %<"
+		exec "!g++ -g % -o %< && gdb -silent %<"
 	endif
 endfunc
 
@@ -235,3 +235,20 @@ imap <F2> <ESC>:NERDTree<CR>i
 nmap <F2> :NERDTree<CR>
 vmap <F2> <ESC>:NERTree<CR>v
 
+"Vim-plugin  vim-pathogen
+execute pathogen#infect()
+
+" Configuration for vim-templates 
+" If you want to cancel the template, uncomment the options below
+"let g:templates_plugin_loaded = 1
+"let g:templates_no_autocmd = 1
+
+" Taglist 在右边显示
+" 打开Tlist
+imap <F6> <ESC>:Tlist<CR>i
+nmap <F6> :Tlist<CR>
+vmap <F6> <ESC>:Tlist<CR>v
+let Tlist_Use_Right_Window=1
+
+" Tags 文件
+set tags=tags;/
