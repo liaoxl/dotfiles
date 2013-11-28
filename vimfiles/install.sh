@@ -7,6 +7,7 @@
 
 echo "Step 1: Copy Files to ~/.vimrc..."
 cp ./vimfiles/vimrc ~/.vimrc
+cp -r ./vimfiles/vim ~/.vim
 echo "Finish step 1"
 
 echo "Step 2: Get Vundle to manage your vim"
